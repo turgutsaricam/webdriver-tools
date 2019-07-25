@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+
+  webdriver-tools-php:
+    build:
+      context: ./../../webdriver-tools
+      dockerfile: env/php/Dockerfile
+
+    image: webdriver-tools-php:latest
+    container_name: webdriver-tools-php
+
+    volumes:
+      - ./../../webdriver-tools:/usr/src/webdriver-tools
+
+  webdriver-tools-php-cli:
+    image: webdriver-tools-php:latest
+    volumes:
+      - ./../../webdriver-tools:/usr/src/webdriver-tools

@@ -1,0 +1,14 @@
+{
+    "name": "turgutsaricam/webdriver-tools",
+    "description": "General-purpose classes for facebook/webdriver",
+    "authors": [
+        {
+            "name": "Turgut Saricam"
+        }
+    ],
+    "minimum-stability": "beta",
+    "require": {
+        "php": "~7.2",
+        "facebook/webdriver": "*"
+    }
+}
