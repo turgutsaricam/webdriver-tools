@@ -289,14 +289,13 @@ abstract class AbstractDriverManager {
     protected function addCurrentWindowAsTab() {
         $handle = $this->getDriver()->getWindowHandle();
 
-        $existingTab = $this->getTabByHandle($handle);
-        if ($existingTab !== null) {
-            throw new \Exception("This tab already exists among the registered tabs.");
-        }
+        $currentTab = $this->getTabByHandle($handle);
 
-        $currentTab = new DriverTab($this, $handle, $this->getDriver()->getCurrentURL());
-        $this->tabs[] = $currentTab;
-        $this->tabListModified();
+        if ($currentTab === null) {
+            $currentTab = new DriverTab($this, $handle, $this->getDriver()->getCurrentURL());
+            $this->tabs[] = $currentTab;
+            $this->tabListModified();
+        }
 
         $this->closeExcessiveTabs();
 
