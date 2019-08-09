@@ -434,7 +434,10 @@ abstract class AbstractDriverManager {
     protected function maybeModifyAjaxUrlForCoverage() {
         // Add the test name query to the AJAX url existing in the page as well
         $ajaxUrl = $this->getDriver()->executeScript("return window.ajaxurl;");
-        $this->getDriver()->executeScript(sprintf('window.ajaxurl = "%1$s";', $this->maybeCreateCoverageEnabledUrl($ajaxUrl)));
+
+        if ($ajaxUrl) {
+            $this->getDriver()->executeScript(sprintf('window.ajaxurl = "%1$s";', $this->maybeCreateCoverageEnabledUrl($ajaxUrl)));
+        }
 
         return $this;
     }
