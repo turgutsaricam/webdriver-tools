@@ -9,6 +9,25 @@ To use this package, create a class that extends `AbstractDriverManager`, implem
 
 In your tests, instead of using the webdriver directly, perform every driver action through an `AbstractDriverManager`. Otherwise, there is no point using a driver manager.
 
+# Development
+To test this project, include it in another project using a local repository by defining the following in that other project's `composer.json`:
+
+```json
+{
+  "repositories": [
+        {
+            "type": "path",
+            "url": "path/to/local/directory/of/webdriver-tools",
+            "options": {
+                "symlink": false
+            }
+        }
+    ],
+}
+```
+
+After this, delete `vendor/turgutsaricam/webdriver-tools` directory from that other project's `vendor` directory, optionally set the version of `turgutsaricam/webdriver-tools` under `require(-dev)` item of `composer.json` to `@dev`, and then run `composer update turgutsaricam/webdriver-tools`. This will copy the files in the local development repository to that other project's `vendor` directory. By this way, the changes can be tested prior to committing the changes to `git`.
+
 # TODO
 
 - Write tests
