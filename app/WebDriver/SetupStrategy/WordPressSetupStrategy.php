@@ -63,19 +63,7 @@ class WordPressSetupStrategy extends AbstractSetupStrategy {
         $loginCookieValue   = $this->getLoginCookieValue();
         $selectorAdminBar   = WebDriverBy::cssSelector('#wpadminbar');
 
-        $options = new ChromeOptions();
-
-        // Available options:
-        // http://peter.sh/experiments/chromium-command-line-switches/
-        $options->addArguments(array(
-            '--window-size=1366,768',
-        ));
-
-        $caps = DesiredCapabilities::chrome();
-        $caps->setCapability(ChromeOptions::CAPABILITY, $options);
-
-        // Create the driver.
-        $driver = RemoteWebDriver::create($this->getSeleniumHostUrl(), $caps);
+        $driver = $this->createDriver();
 
         $siteListUrl = $this->getManager()->maybeCreateCoverageEnabledUrl($this->getInitialUrl());
 
@@ -133,6 +121,26 @@ class WordPressSetupStrategy extends AbstractSetupStrategy {
             }
         }
 
+        return $driver;
+    }
+
+    /**
+     * @return RemoteWebDriver
+     */
+    protected function createDriver(): RemoteWebDriver {
+        $options = new ChromeOptions();
+
+        // Available options:
+        // http://peter.sh/experiments/chromium-command-line-switches/
+        $options->addArguments([
+            '--window-size=1366,768',
+        ]);
+
+        $caps = DesiredCapabilities::chrome();
+        $caps->setCapability(ChromeOptions::CAPABILITY, $options);
+
+        // Create the driver.
+        $driver = RemoteWebDriver::create($this->getSeleniumHostUrl(), $caps);
         return $driver;
     }
 
