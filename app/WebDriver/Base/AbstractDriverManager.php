@@ -97,7 +97,16 @@ abstract class AbstractDriverManager {
             if ($driverTab->getUrl() !== $url) continue;
 
             $driverTab->activate();
-            return;
+
+            // The tab's URL might have changed. Get the tab's current URL.
+            $currentUrl = $this->getDriver()->getCurrentURL();
+            if (strpos($currentUrl, $url) === 0) {
+                return;
+
+            } else {
+                $this->closeCurrentTab();
+            }
+
         }
 
         // There is no tab found. Open a new tab via JavaScript and make sure the tab is activated. Then, load the URL
