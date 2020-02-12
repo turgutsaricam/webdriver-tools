@@ -95,8 +95,24 @@ class WordPressSetupStrategy extends AbstractSetupStrategy {
             echo "Login with cookies did not succeed. Trying to login with user name and password...\n";
         }
 
-        $driver->findElement(WebDriverBy::cssSelector('#user_login'))->sendKeys($loginUser);
-        $driver->findElement(WebDriverBy::cssSelector('#user_pass'))->sendKeys($loginPassword);
+        $inputUsername = $driver->findElement(WebDriverBy::cssSelector('#user_login'));
+        $inputPassword = $driver->findElement(WebDriverBy::cssSelector('#user_pass'));
+
+        // Make sure the username and the password are set correctly. They are not set correctly sometimes, probably
+        // due to some WordPress things.
+        for($i = 0; $i < 100; $i++) {
+            $inputUsername->clear()->sendKeys($loginUser);
+            $inputPassword->clear()->sendKeys($loginPassword);
+
+            sleep(1);
+            $setUsername = $inputUsername->getAttribute('value');
+            $setPassword = $inputPassword->getAttribute('value');
+
+            if ($setUsername === $loginUser && $setPassword === $loginPassword) {
+                break;
+            }
+        }
+
         $driver->findElement(WebDriverBy::cssSelector('#rememberme'))->click();
         $driver->findElement(WebDriverBy::cssSelector('#wp-submit'))->click();
 
