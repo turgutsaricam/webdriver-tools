@@ -52,7 +52,9 @@ abstract class AbstractDriverManager {
         // tests are finished. So, the browser will not be needed after this object is destructed. If the get method of
         // this class is called at a later time, a new browser session will be initialized without any errors. So,
         // quitting here is safe to do.
-        $this->driver->quit();
+        if ($this->driver !== null) {
+            $this->driver->quit();
+        }
     }
 
     /*
