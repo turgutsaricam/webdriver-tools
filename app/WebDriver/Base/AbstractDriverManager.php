@@ -9,6 +9,7 @@
 namespace TurgutSaricam\WebDriverTools\WebDriver\Base;
 
 
+use Exception;
 use Facebook\WebDriver\Exception\NoSuchElementException;
 use Facebook\WebDriver\Exception\TimeOutException;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
@@ -211,7 +212,7 @@ abstract class AbstractDriverManager {
      */
     public function getLastTab() {
         $tabCount = $this->getTabCount();
-        if ($tabCount === 0) throw new \Exception('There is no tab.');
+        if ($tabCount === 0) throw new Exception('There is no tab.');
 
         return $this->tabs[$tabCount - 1];
     }
@@ -219,7 +220,7 @@ abstract class AbstractDriverManager {
     /**
      * Closes all tabs, and hence, the browser.
      *
-     * @throws \Exception See {@link closeTab()}
+     * @throws Exception See {@link closeTab()}
      */
     public function closeBrowser() {
         // Quit
@@ -295,7 +296,7 @@ abstract class AbstractDriverManager {
      * Add current window/tab to {@link $tabs}.
      *
      * @return DriverTab Newly added {@link DriverTab}
-     * @throws \Exception If the current window is already among the registered tabs.
+     * @throws Exception If the current window is already among the registered tabs.
      */
     protected function addCurrentWindowAsTab() {
         $handle = $this->getDriver()->getWindowHandle();
@@ -335,7 +336,7 @@ abstract class AbstractDriverManager {
 
     /**
      * @param DriverTab $tab
-     * @throws \Exception If a tab could not be closed.
+     * @throws Exception If a tab could not be closed.
      */
     protected function closeTab($tab) {
         // Close it. First, activate. Then, close the last active window.
@@ -345,7 +346,7 @@ abstract class AbstractDriverManager {
         // Make sure the tab is closed by checking its handle
         $handles = $this->getDriver()->getWindowHandles();
         if (isset($handles[$tab->getHandle()])) {
-            throw new \Exception(sprintf(
+            throw new Exception(sprintf(
                 'Tab with handle %1$s and URL %2$s could not be closed.',
                 $tab->getHandle(),
                 $tab->getUrl()
