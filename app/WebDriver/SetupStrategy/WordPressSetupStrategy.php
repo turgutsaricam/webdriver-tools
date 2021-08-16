@@ -150,7 +150,7 @@ class WordPressSetupStrategy extends AbstractSetupStrategy {
         // http://peter.sh/experiments/chromium-command-line-switches/
         $options->addArguments([
             '--start-maximized',
-        ]);;
+        ]);
 
         $caps = DesiredCapabilities::chrome();
         $caps->setCapability(ChromeOptions::CAPABILITY, $options);
