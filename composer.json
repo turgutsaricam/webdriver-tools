@@ -8,8 +8,8 @@
     ],
     "minimum-stability": "beta",
     "require": {
-        "php": "~7.2",
-        "facebook/webdriver": "*"
+        "php": ">=7.2",
+        "php-webdriver/webdriver": "*"
     },
     "autoload": {
         "psr-4": {
